@@ -3,6 +3,8 @@
 
 This is a Docker container for [Chromium](https://www.mozilla.org/en-US/firefox/).
 
+This is a Docker container for Firefox
+
 The GUI of the application is accessed through a modern web browser (no installation or configuration needed on client side) or via any VNC client.
 
 ---
