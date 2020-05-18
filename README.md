@@ -1,21 +1,21 @@
-# Docker container for Firefox
+# Docker container for Chromium
 [![Docker Image Size](https://img.shields.io/microbadger/image-size/jlesage/firefox)](http://microbadger.com/#/images/jlesage/firefox) [![Build Status](https://drone.le-sage.com/api/badges/jlesage/docker-firefox/status.svg)](https://drone.le-sage.com/jlesage/docker-firefox) [![GitHub Release](https://img.shields.io/github/release/jlesage/docker-firefox.svg)](https://github.com/jlesage/docker-firefox/releases/latest) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/JocelynLeSage/0usd)
 
-This is a Docker container for [Firefox](https://www.mozilla.org/en-US/firefox/).
+This is a Docker container for [Chromium](https://www.mozilla.org/en-US/firefox/).
 
 The GUI of the application is accessed through a modern web browser (no installation or configuration needed on client side) or via any VNC client.
 
 ---
 
-[![Firefox logo](https://images.weserv.nl/?url=raw.githubusercontent.com/jlesage/docker-templates/master/jlesage/images/firefox-icon.png&w=200)](https://www.mozilla.org/en-US/firefox/)[![Firefox](https://dummyimage.com/400x110/ffffff/575757&text=Firefox)](https://www.mozilla.org/en-US/firefox/)
+[![Chromium logo](https://images.weserv.nl/?url=raw.githubusercontent.com/jlesage/docker-templates/master/jlesage/images/firefox-icon.png&w=200)](https://www.mozilla.org/en-US/firefox/)[![Chromium](https://dummyimage.com/400x110/ffffff/575757&text=Chromium)](https://www.mozilla.org/en-US/firefox/)
 
-Mozilla Firefox is a free and open-source web browser developed by Mozilla Foundation and its subsidiary, Mozilla Corporation.
+Mozilla Chromium is a free and open-source web browser developed by Mozilla Foundation and its subsidiary, Mozilla Corporation.
 
 ---
 
 ## Table of Content
 
-   * [Docker container for Firefox](#docker-container-for-firefox)
+   * [Docker container for Chromium](#docker-container-for-firefox)
       * [Table of Content](#table-of-content)
       * [Quick Start](#quick-start)
       * [Usage](#usage)
@@ -39,7 +39,7 @@ Mozilla Firefox is a free and open-source web browser developed by Mozilla Found
       * [Shell Access](#shell-access)
       * [Increasing Shared Memory Size](#increasing-shared-memory-size)
       * [Sound Support](#sound-support)
-      * [Setting Firefox Preferences Via Environment Variables](#setting-firefox-preferences-via-environment-variables)
+      * [Setting Chromium Preferences Via Environment Variables](#setting-firefox-preferences-via-environment-variables)
       * [Troubleshooting](#troubleshooting)
          * [Crashes](#crashes)
       * [Support or Contact](#support-or-contact)
@@ -49,7 +49,7 @@ Mozilla Firefox is a free and open-source web browser developed by Mozilla Found
 **NOTE**: The Docker command provided in this quick start is given as an example
 and parameters should be adjusted to your need.
 
-Launch the Firefox docker container with the following command:
+Launch the Chromium docker container with the following command:
 ```
 docker run -d \
     --name=firefox \
@@ -62,7 +62,7 @@ docker run -d \
 Where:
   - `/docker/appdata/firefox`: This is where the application stores its configuration, log and any files needing persistency.
 
-Browse to `http://your-host-ip:5800` to access the Firefox GUI.
+Browse to `http://your-host-ip:5800` to access the Chromium GUI.
 
 ## Usage
 
@@ -203,7 +203,7 @@ container image.
   4.  Select the image, click *Download* and then choose the `latest` tag.
   5.  Wait for the download to complete.  A  notification will appear once done.
   6.  Click on *Container* in the left pane.
-  7.  Select your Firefox container.
+  7.  Select your Chromium container.
   8.  Stop it by clicking *Action*->*Stop*.
   9.  Clear the container by clicking *Action*->*Clear*.  This removes the
       container while keeping its configuration.
@@ -443,7 +443,7 @@ creation (e.g. `crashplan-pro`).
 
 ## Increasing Shared Memory Size
 
-To prevent crashes from happening when running Firefox
+To prevent crashes from happening when running Chromium
 inside a Docker container, the size of the shared memory located at `/dev/shm`
 must be increased.  The issue is documented [here].
 
@@ -458,13 +458,13 @@ size of `/dev/shm` can be done via two method:
 
 ## Sound Support
 
-For Firefox to be able to use the audio device available on
+For Chromium to be able to use the audio device available on
 the host, `/dev/snd` must be exposed to the container by adding the
 `--device /dev/snd` parameter to the `docker run` command.
 
-## Setting Firefox Preferences Via Environment Variables
+## Setting Chromium Preferences Via Environment Variables
 
-Firefox preferences can be set via environment variables
+Chromium preferences can be set via environment variables
 passed to the containter.  During the startup, a script process all these
 variables and modify the preference file accordingly.
 
@@ -496,13 +496,13 @@ example:
 ```
 
 **NOTE**: This is an advanced usage and it is recommended to set preferences
-via Firefox directly.
+via Chromium directly.
 
 ## Troubleshooting
 
 ### Crashes
 
-If Firefox is crashing frequently, make sure the size of
+If Chromium is crashing frequently, make sure the size of
 the shared memory located at `/dev/shm` has been increased.  See
 [Increasing Shared Memory Size](#increasing-shared-memory-size) section for more
 details.
