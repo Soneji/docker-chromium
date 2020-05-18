@@ -1,15 +1,16 @@
 # Docker container for Chromium
-[![Docker Image Size](https://img.shields.io/microbadger/image-size/jlesage/firefox)](http://microbadger.com/#/images/jlesage/firefox) [![Build Status](https://drone.le-sage.com/api/badges/jlesage/docker-firefox/status.svg)](https://drone.le-sage.com/jlesage/docker-firefox) [![GitHub Release](https://img.shields.io/github/release/jlesage/docker-firefox.svg)](https://github.com/jlesage/docker-firefox/releases/latest) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/JocelynLeSage/0usd)
 
-This is a Docker container for [Chromium](https://www.mozilla.org/en-US/firefox/).
-
-This is a Docker container for Firefox
+This is a Docker container for Chromium.
 
 The GUI of the application is accessed through a modern web browser (no installation or configuration needed on client side) or via any VNC client.
 
 ---
 
-[![Chromium logo](https://images.weserv.nl/?url=raw.githubusercontent.com/jlesage/docker-templates/master/jlesage/images/firefox-icon.png&w=200)](https://www.mozilla.org/en-US/firefox/)[![Chromium](https://dummyimage.com/400x110/ffffff/575757&text=Chromium)](https://www.mozilla.org/en-US/firefox/)
+Big thanks to @jlesage. This image is based off https://github.com/jlesage/docker-firefox
+
+___
+
+[![Chromium](https://dummyimage.com/400x110/ffffff/575757&text=Chromium)
 
 Mozilla Chromium is a free and open-source web browser developed by Mozilla Foundation and its subsidiary, Mozilla Corporation.
 
@@ -17,7 +18,7 @@ Mozilla Chromium is a free and open-source web browser developed by Mozilla Foun
 
 ## Table of Content
 
-   * [Docker container for Chromium](#docker-container-for-firefox)
+   * [Docker container for Chromium](#docker-container-for-chromium)
       * [Table of Content](#table-of-content)
       * [Quick Start](#quick-start)
       * [Usage](#usage)
@@ -41,7 +42,7 @@ Mozilla Chromium is a free and open-source web browser developed by Mozilla Foun
       * [Shell Access](#shell-access)
       * [Increasing Shared Memory Size](#increasing-shared-memory-size)
       * [Sound Support](#sound-support)
-      * [Setting Chromium Preferences Via Environment Variables](#setting-firefox-preferences-via-environment-variables)
+      * [Setting Chromium Preferences Via Environment Variables](#setting-chromium-preferences-via-environment-variables)
       * [Troubleshooting](#troubleshooting)
          * [Crashes](#crashes)
       * [Support or Contact](#support-or-contact)
@@ -54,15 +55,15 @@ and parameters should be adjusted to your need.
 Launch the Chromium docker container with the following command:
 ```
 docker run -d \
-    --name=firefox \
+    --name=chromium \
     -p 5800:5800 \
-    -v /docker/appdata/firefox:/config:rw \
+    -v /docker/appdata/chromium:/config:rw \
     --shm-size 2g \
-    jlesage/firefox
+    overclockedllama/docker-chromium
 ```
 
 Where:
-  - `/docker/appdata/firefox`: This is where the application stores its configuration, log and any files needing persistency.
+  - `/docker/appdata/chromium`: This is where the application stores its configuration, log and any files needing persistency.
 
 Browse to `http://your-host-ip:5800` to access the Chromium GUI.
 
@@ -70,12 +71,12 @@ Browse to `http://your-host-ip:5800` to access the Chromium GUI.
 
 ```
 docker run [-d] \
-    --name=firefox \
+    --name=chromium \
     [-e <VARIABLE_NAME>=<VALUE>]... \
     [-v <HOST_DIR>:<CONTAINER_DIR>[:PERMISSIONS]]... \
     [-p <HOST_PORT>:<CONTAINER_PORT>]... \
     --shm-size VALUE \
-    jlesage/firefox
+    overclockedllama/docker-chromium
 ```
 | Parameter | Description |
 |-----------|-------------|
@@ -141,11 +142,11 @@ re-create the container:
 
   1. Stop the container (if it is running):
 ```
-docker stop firefox
+docker stop chromium
 ```
   2. Remove the container:
 ```
-docker rm firefox
+docker rm chromium
 ```
   3. Create/start the container using the `docker run` command, by adjusting
      parameters as needed.
@@ -166,13 +167,13 @@ ports are part of the example.
 ```yaml
 version: '3'
 services:
-  firefox:
-    image: jlesage/firefox
+  chromium:
+    image: overclockedllama/docker-chromium
     build: .
     ports:
       - "5800:5800"
     volumes:
-      - "/docker/appdata/firefox:/config:rw"
+      - "/docker/appdata/chromium:/config:rw"
 ```
 
 ## Docker Image Update
@@ -182,15 +183,15 @@ the Docker image, the following steps can be followed:
 
   1. Fetch the latest image:
 ```
-docker pull jlesage/firefox
+docker pull overclockedllama/docker-chromium
 ```
   2. Stop the container:
 ```
-docker stop firefox
+docker stop chromium
 ```
   3. Remove the container:
 ```
-docker rm firefox
+docker rm chromium
 ```
   4. Start the container using the `docker run` command.
 
@@ -201,7 +202,7 @@ container image.
 
   1.  Open the *Docker* application.
   2.  Click on *Registry* in the left pane.
-  3.  In the search bar, type the name of the container (`jlesage/firefox`).
+  3.  In the search bar, type the name of the container (`overclockedllama/docker-chromium`).
   4.  Select the image, click *Download* and then choose the `latest` tag.
   5.  Wait for the download to complete.  A  notification will appear once done.
   6.  Click on *Container* in the left pane.
@@ -350,7 +351,7 @@ In this scenario, each hostname is routed to a different application/container.
 
 For example, let's say the reverse proxy server is running on the same machine
 as this container.  The server would proxy all HTTP requests sent to
-`firefox.domain.tld` to the container at `127.0.0.1:5800`.
+`chromium.domain.tld` to the container at `127.0.0.1:5800`.
 
 Here are the relevant configuration elements that would be added to the NGINX
 configuration:
@@ -361,7 +362,7 @@ map $http_upgrade $connection_upgrade {
 	''      close;
 }
 
-upstream docker-firefox {
+upstream docker-chromium {
 	# If the reverse proxy server is not running on the same machine as the
 	# Docker container, use the IP of the Docker host here.
 	# Make sure to adjust the port according to how port 5800 of the
@@ -372,14 +373,14 @@ upstream docker-firefox {
 server {
 	[...]
 
-	server_name firefox.domain.tld;
+	server_name chromium.domain.tld;
 
 	location / {
-	        proxy_pass http://docker-firefox;
+	        proxy_pass http://docker-chromium;
 	}
 
 	location /websockify {
-		proxy_pass http://docker-firefox;
+		proxy_pass http://docker-chromium;
 		proxy_http_version 1.1;
 		proxy_set_header Upgrade $http_upgrade;
 		proxy_set_header Connection $connection_upgrade;
@@ -396,7 +397,7 @@ route to different applications/containers.
 
 For example, let's say the reverse proxy server is running on the same machine
 as this container.  The server would proxy all HTTP requests for
-`server.domain.tld/firefox` to the container at `127.0.0.1:5800`.
+`server.domain.tld/chromium` to the container at `127.0.0.1:5800`.
 
 Here are the relevant configuration elements that would be added to the NGINX
 configuration:
@@ -407,7 +408,7 @@ map $http_upgrade $connection_upgrade {
 	''      close;
 }
 
-upstream docker-firefox {
+upstream docker-chromium {
 	# If the reverse proxy server is not running on the same machine as the
 	# Docker container, use the IP of the Docker host here.
 	# Make sure to adjust the port according to how port 5800 of the
@@ -418,11 +419,11 @@ upstream docker-firefox {
 server {
 	[...]
 
-	location = /firefox {return 301 $scheme://$http_host/firefox/;}
-	location /firefox/ {
-		proxy_pass http://docker-firefox/;
-		location /firefox/websockify {
-			proxy_pass http://docker-firefox/websockify/;
+	location = /chromium {return 301 $scheme://$http_host/chromium/;}
+	location /chromium/ {
+		proxy_pass http://docker-chromium/;
+		location /chromium/websockify {
+			proxy_pass http://docker-chromium/websockify/;
 			proxy_http_version 1.1;
 			proxy_set_header Upgrade $http_upgrade;
 			proxy_set_header Connection $connection_upgrade;
@@ -437,7 +438,7 @@ server {
 To get shell access to a the running container, execute the following command:
 
 ```
-docker exec -ti CONTAINER sh
+docker exec -it CONTAINER sh
 ```
 
 Where `CONTAINER` is the ID or the name of the container used during its
@@ -464,42 +465,6 @@ For Chromium to be able to use the audio device available on
 the host, `/dev/snd` must be exposed to the container by adding the
 `--device /dev/snd` parameter to the `docker run` command.
 
-## Setting Chromium Preferences Via Environment Variables
-
-Chromium preferences can be set via environment variables
-passed to the containter.  During the startup, a script process all these
-variables and modify the preference file accordingly.
-
-The name of the environment variable must start with `FF_PREF_`, followed by a
-string of your choice.  For example, `FF_PREF_MY_PREF` is a valid name.
-
-The content of the variable should be in the format `NAME=VAL`, where `NAME` is
-the name of the preference (as found in the `about:config` page) and `VAL` is
-its value.  A value can be one of the following type:
-  - string
-  - integer
-  - boolean
-It is important to note that a value of type `string` should be surrounded by
-double quotes.  Other types don't need them.
-
-For example, to set the `network.proxy.http` preference, one would pass the
-environment variable to the container by adding the following argument to the
-`docker run` command:
-
-```
--e "FF_PREF_HTTP_PROXY=network.proxy.http=\"proxy.example.com\""
-```
-
-If a preference needs to be *removed*, its value should be set to `UNSET`.  For
-example:
-
-```
--e "FF_PREF_HTTP_PROXY=network.proxy.http=UNSET"
-```
-
-**NOTE**: This is an advanced usage and it is recommended to set preferences
-via Chromium directly.
-
 ## Troubleshooting
 
 ### Crashes
@@ -509,9 +474,6 @@ the shared memory located at `/dev/shm` has been increased.  See
 [Increasing Shared Memory Size](#increasing-shared-memory-size) section for more
 details.
 
-[TimeZone]: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-[here]: https://bugzilla.mozilla.org/show_bug.cgi?id=1338771#c10
-
 ## Support or Contact
 
 Having troubles with the container or have questions?  Please
@@ -519,4 +481,4 @@ Having troubles with the container or have questions?  Please
 
 For other great Dockerized applications, see https://jlesage.github.io/docker-apps.
 
-[create a new issue]: https://github.com/jlesage/docker-firefox/issues
+[create a new issue]: https://github.com/overclockedllama/docker-chromium/issues
