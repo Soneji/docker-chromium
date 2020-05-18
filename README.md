@@ -12,8 +12,6 @@ ___
 
 [![Chromium](https://dummyimage.com/400x110/ffffff/575757&text=Chromium)
 
-Mozilla Chromium is a free and open-source web browser developed by Mozilla Foundation and its subsidiary, Mozilla Corporation.
-
 ---
 
 ## Table of Content
