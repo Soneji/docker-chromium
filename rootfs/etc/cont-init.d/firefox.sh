@@ -9,7 +9,7 @@ log() {
 
 # Make sure some directories are created.
 mkdir -p /config/downloads
-mkdir -p /config/log/firefox
+mkdir -p /config/log/chromium
 
 # Generate machine id.
 if [ ! -f /etc/machine-id ]; then
@@ -20,9 +20,9 @@ fi
 # Verify the size of /dev/shm.
 SHM_SIZE_MB="$(df -m /dev/shm | tail -n 1 | tr -s ' ' | cut -d ' ' -f2)"
 if [ "$SHM_SIZE_MB" -eq 64 ]; then
-   echo 'FAIL' > /tmp/.firefox_shm_check
+   echo 'FAIL' > /tmp/.chromium_shm_check
 else
-   echo 'PASS' > /tmp/.firefox_shm_check
+   echo 'PASS' > /tmp/.chromium_shm_check
 fi
 
 # Clean/optimize Firefox databases.
@@ -55,7 +55,7 @@ if [ -n "$(ls /config/profile/sessionstore-backups/*.jsonlz4 2>/dev/null)" ]; th
 fi
 
 # Make sure monitored log files exist.
-for LOG_FILE in /config/log/firefox/error.log
+for LOG_FILE in /config/log/chromium/error.log
 do
     touch "$LOG_FILE"
 done

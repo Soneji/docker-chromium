@@ -10,7 +10,7 @@ Big thanks to @jlesage. This image is based off https://github.com/jlesage/docke
 
 ___
 
-[![Chromium](https://dummyimage.com/400x110/ffffff/575757&text=Chromium)
+![Chromium](https://dummyimage.com/400x110/ffffff/575757&text=Chromium)
 
 ---
 

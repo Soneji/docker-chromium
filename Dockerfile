@@ -91,8 +91,8 @@ RUN \
 # Enable log monitoring.
 RUN \
     add-pkg yad && \
-    sed-patch 's|LOG_FILES=|LOG_FILES=/config/log/firefox/error.log|' /etc/logmonitor/logmonitor.conf && \
-    sed-patch 's|STATUS_FILES=|STATUS_FILES=/tmp/.firefox_shm_check|' /etc/logmonitor/logmonitor.conf
+    sed-patch 's|LOG_FILES=|LOG_FILES=/config/log/chromium/error.log|' /etc/logmonitor/logmonitor.conf && \
+    sed-patch 's|STATUS_FILES=|STATUS_FILES=/tmp/.chromium_shm_check|' /etc/logmonitor/logmonitor.conf
 
 # Adjust the openbox config.
 RUN \
@@ -105,7 +105,7 @@ RUN \
 
 # Generate and install favicons.
 RUN \
-    APP_ICON_URL=https://github.com/jlesage/docker-templates/raw/master/jlesage/images/firefox-icon.png && \
+    APP_ICON_URL=https://www.chromium.org/_/rsrc/1438879449147/config/customLogo.gif && \
     install_app_icon.sh "$APP_ICON_URL"
 
 # Add files.
@@ -122,5 +122,5 @@ LABEL \
       org.label-schema.name="chromium" \
       org.label-schema.description="Docker container for Chromium" \
       org.label-schema.version="$DOCKER_IMAGE_VERSION" \
-      org.label-schema.vcs-url="https://github.com/jlesage/docker-chromium" \
+      org.label-schema.vcs-url="https://github.com/overclockedllama/docker-chromium" \
       org.label-schema.schema-version="1.0"
