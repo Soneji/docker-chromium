@@ -1,5 +1,7 @@
 # Docker container for Chromium
 
+<img src="https://repository-images.githubusercontent.com/265011647/d609fa80-bad5-11ea-8898-a68379ea5d9f">
+
 This is a Docker container for Chromium.
 
 The GUI of the application is accessed through a modern web browser (no installation or configuration needed on client side) or via any VNC client.
