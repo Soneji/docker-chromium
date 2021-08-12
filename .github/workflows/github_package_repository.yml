@@ -9,6 +9,7 @@ jobs:
       uses: actions/checkout@master
       
     - name: Publish Docker Image to GPR
+      id: publish
       uses: machine-learning-apps/gpr-docker-publish@master
       with:
         IMAGE_NAME: 'docker-chromium'
@@ -20,4 +21,4 @@ jobs:
 
     - uses: Azure/container-scan@v0
       with:
-        image-name: ${{ steps.docker.outputs.IMAGE_SHA_NAME }}
+        image-name: ${{ steps.publish.outputs.IMAGE_SHA_NAME }}
