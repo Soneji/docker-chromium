@@ -35,7 +35,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ github.repository }}
 
       - name: Build and push Docker image
         id: publish
@@ -48,4 +48,4 @@ jobs:
 
       - uses: Azure/container-scan@v0
         with:
-          image-name: ${{ env.IMAGE_NAME }}@${{ steps.publish.outputs.digest }}
+          image-name: ${{ env.REGISTRY }}/${{ github.repository }}@${{ steps.publish.outputs.digest }}
