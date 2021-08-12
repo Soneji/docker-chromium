@@ -1,3 +1,11 @@
 general:
-  vulnerabilities: []
-  bestPracticeViolations: []
+  vulnerabilities: 
+    - CVE-2021-30139
+    - CVE-2020-35492
+    - CVE-2021-23017
+    - CVE-2021-3472
+  bestPracticeViolations:
+    - CIS-DI-0001
+    - CIS-DI-0005
+    - CIS-DI-0006
+    - CIS-DI-0008
