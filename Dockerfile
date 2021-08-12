@@ -5,7 +5,7 @@
 #
 
 # Pull base image.
-FROM jlesage/baseimage-gui:alpine-3.10-v3.5.3
+FROM jlesage/baseimage-gui:alpine-3.12-v3.5.7
 
 # Docker image version is provided via build arg.
 ARG DOCKER_IMAGE_VERSION=unknown
@@ -46,7 +46,7 @@ RUN \
     del-pkg build-dependencies && \
     rm -rf /tmp/* /tmp/.[!.]*
 
-# Install Firefox.
+# Install Chromium.
 RUN \
     add-pkg --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
             --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
@@ -61,32 +61,6 @@ RUN \
         ffmpeg-libs \
         # The following package is used to send key presses to the X process.
         xdotool
-
-# Set default settings.
-# RUN \
-#     CFG_FILE="$(ls /usr/lib/firefox/browser/defaults/preferences/firefox-branding.js)" && \
-#     echo '' >> "$CFG_FILE" && \
-#     echo '// Default download directory.' >> "$CFG_FILE" && \
-#     echo 'pref("browser.download.dir", "/config/downloads");' >> "$CFG_FILE" && \
-#     echo 'pref("browser.download.folderList", 2);' >> "$CFG_FILE"
-
-# Install profile-cleaner.
-#RUN \
-#    add-pkg --virtual build-dependencies curl && \
-#    curl -# -L -o /usr/bin/profile-cleaner {$PROFILE_CLEANER_URL} && \
-#    sed-patch 's/@VERSION@/'${PROFILE_CLEANER_VERSION}'/' /usr/bin/profile-cleaner && \
-#    chmod +x /usr/bin/profile-cleaner && \
-#    add-pkg \
-#        bash \
-#        file \
-#        coreutils \
-#        bc \
-#        parallel \
-#        sqlite \
-#        && \
-#    # Cleanup.
-#    del-pkg build-dependencies && \
-#    rm -rf /tmp/* /tmp/.[!.]*
 
 # Enable log monitoring.
 RUN \
@@ -122,5 +96,5 @@ LABEL \
       org.label-schema.name="chromium" \
       org.label-schema.description="Docker container for Chromium" \
       org.label-schema.version="$DOCKER_IMAGE_VERSION" \
-      org.label-schema.vcs-url="https://github.com/overclockedllama/docker-chromium" \
+      org.label-schema.vcs-url="https://github.com/putty182/docker-chromium" \
       org.label-schema.schema-version="1.0"
