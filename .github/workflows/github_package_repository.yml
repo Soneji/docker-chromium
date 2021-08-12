@@ -18,6 +18,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - uses: Azure/container-scan@master
+    - uses: Azure/container-scan@v0
       with:
         image-name: ${{ steps.docker.outputs.IMAGE_SHA_NAME }}
