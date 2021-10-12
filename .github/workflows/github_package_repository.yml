@@ -45,7 +45,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - uses: Azure/container-scan@v0
-        with:
-          image-name: ${{ env.REGISTRY }}/${{ github.repository }}@${{ steps.publish.outputs.digest }}
