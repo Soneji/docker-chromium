@@ -19,29 +19,18 @@ spec:
       containers:
         - env:
             - name: TZ
-              value: Etc/UTC
-            - name: KEEP_APP_RUNNING
-              value: "1"
-            - name: DISPLAY_WIDTH
-              value: "1920"
-            - name: DISPLAY_HEIGHT
-              value: "1080"
+              value: "Etc/UTC"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
           image: ghcr.io/putty182/docker-chromium
           imagePullPolicy: Always
           name: chromium
           ports:
-            - containerPort: 5800
-              name: webgui-tcp
+            - containerPort: 3000
+              name: guac-tcp
               protocol: TCP
-            - containerPort: 5800
-              name: webgui-udp
-              protocol: UDP
-            - containerPort: 5900
-              name: vnc-tcp
-              protocol: TCP
-            - containerPort: 5900
-              name: vnc-udp
-              protocol: UDP
           resources:
             limits:
               cpu: "4"
