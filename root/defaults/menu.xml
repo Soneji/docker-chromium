@@ -11,7 +11,7 @@
 <menu id="apps-net-menu" label="Internet">
   <item label="Chromium">
     <action name="Execute">
-      <command>chromium-browser</command>
+      <command>chromium-browser --no-sandbox --user-data-dir=/config/profile</command>
       <startupnotify>
         <enabled>yes</enabled>
         <wmclass>Chromium</wmclass>
