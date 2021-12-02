@@ -1,32 +1,49 @@
 name: Publish Docker image to GitHub Package Registry
-on: push
+  
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: {}
+  schedule:
+    - cron: '30 22 * * 3'
+  
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
-  build:
-    runs-on: ubuntu-latest 
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
+    
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Checkout Master
-      uses: actions/checkout@master
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-     #This Action Emits 2 Variables, IMAGE_SHA_NAME and IMAGE_URL 
-     #which you can reference in subsequent steps
-    - name: Publish Docker Image to GPR
-      uses: machine-learning-apps/gpr-docker-publish@master
-      id: docker
-      with:
-        IMAGE_NAME: 'docker-chromium'
-        TAG: 'latest'
-        DOCKERFILE_PATH: 'Dockerfile'
-        BUILD_CONTEXT: '.'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}
 
-    # This second step is illustrative and shows how to reference the 
-    # output variables.  This is completely optional.
-    - name: Show outputs of previous step
-      run: |
-        echo "The name:tag of the Docker Image is: $VAR1"
-        echo "The docker image is hosted at $VAR2"
-      env:
-        VAR1: ${{ steps.docker.outputs.IMAGE_SHA_NAME }}
-        VAR2: ${{ steps.docker.outputs.IMAGE_URL }}
+      - name: Build and push Docker image
+        id: publish
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

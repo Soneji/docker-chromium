@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: chromium
+  name: chromium
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chromium
+  serviceName: chromium
+  template:
+    metadata:
+      labels:
+        app: chromium
+    spec:
+      containers:
+        - env:
+            - name: TZ
+              value: "Etc/UTC"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          image: ghcr.io/putty182/docker-chromium
+          imagePullPolicy: Always
+          name: chromium
+          ports:
+            - containerPort: 3000
+              name: guac-tcp
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "4"
+              memory: 8G
+            requests:
+              cpu: 100m
+              memory: 450M
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /config
+              name: chromium-config
+            - mountPath: /dev/shm
+              name: shared-memory
+            - mountPath: /downloads
+              name: chromium-downloads
+      volumes:
+        - name: chromium-config
+          persistentVolumeClaim:
+            claimName: chromium-config
+        - name: chromium-downloads
+          persistentVolumeClaim:
+            claimName: chromium-downloads
+        - emptyDir:
+            medium: Memory
+            sizeLimit: 4G
+          name: shared-memory

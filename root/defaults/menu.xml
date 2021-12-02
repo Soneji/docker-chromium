@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openbox_menu xmlns="http://openbox.org/3.4/menu">
+
+<menu id="apps-term-menu" label="Terminals">
+  <item label="Xterm">
+    <action name="Execute"><command>xterm</command></action>
+  </item>
+</menu>
+
+<menu id="apps-net-menu" label="Internet">
+  <item label="Chromium">
+    <action name="Execute">
+      <command>chromium-browser --no-sandbox --user-data-dir=/config/profile</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>Chromium</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="root-menu" label="Openbox 3">
+  <separator label="Applications" />
+  <menu id="apps-net-menu"/>
+  <menu id="apps-term-menu"/>
+</menu>
+
+</openbox_menu>
