@@ -1,5 +1,4 @@
-#!/usr/bin/with-contenv sh
-
+#!/bin/sh
 set -e # Exit immediately if a command exits with a non-zero status.
 set -u # Treat unset variables as an error.
 
@@ -62,5 +61,8 @@ done
 
 # Take ownership of the config directory content.
 find /config -mindepth 1 -exec chown $USER_ID:$GROUP_ID {} \;
+
+# Unlock the profile (may be left over previously. Will cause trouble if trying to use same profile in parallel so don't do that.)
+rm -rf /config/profile/Singleton*
 
 # vim: set ft=sh :
