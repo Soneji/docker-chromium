@@ -1,5 +1,4 @@
-#!/usr/bin/with-contenv sh
-
+#!/bin/sh
 set -e
 
 log() {
